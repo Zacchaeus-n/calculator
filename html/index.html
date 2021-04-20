@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ShoppingListApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../images/icon/favicon.ico" type="image/x-icon">
+    <!-- angularjs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Front End Basics</title>
+</head>
+<body>
+    <div class="wrap">
+        <header class="header">Simple Projects on Front End Development</header>
+        <section id="shoppingList" ng-controller="ListController">
+            <h2>Shopping List</h2>
+            <div class="table-responsive-md">
+            <table class="table table-hover">
+                <caption>You have {{list.length}} shopping list(s)</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">List Item</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="item in list">
+                    <tr >
+                        <th scope="row">{{$index + 1}}</th>
+                        <td>{{item}}</td>
+                        <td><button class="btn btn-danger" ng-click="removeItem(item)">x</button></td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+            </div>
+            <hr>
+           <div class="input">
+                <input type="text" placeholder="Enter Item" ng-model="newItem">
+                <button class="btn btn-success" ng-click="addItem(newItem)">+</button>
+           </div>
+        </section>
+        <section id="p2" ng-controller="ImageController">
+            <h2>Previous and Next Navigation</h2>
+            <div class="imageWrap">
+                <button class="btn btn-secondary" ng-click="previous()">Previous</button>
+                <div class="imageWrap__img">
+                    <img ng-src="{{avatar[imagesCount]}}" alt="">
+                </div>
+                <span class="imageCounter"><p>{{imagesCount}} of {{avatar.length}}</p></span>
+                <button class="btn btn-success" ng-click="next()">Next</button>
+            </div>
+        </section>
+        <section id="p3" ng-controller="ComposersController">
+            <h2>Top 3 Classical Composers</h2>
+            <div class="composer">
+                <div class="cards">
+                    <div class="card" data-description="Mastermind by infoDesigns">
+                        <img src="../images/composers/amadeus.jpg" alt="infoDdesk">
+                        <h2>Wolfgang Amadeus Mozart (1756–91) </h2>
+                        <button ng-click="select = 'Amadeus Mozart'" class="card__btn" type="button">Compositions ►</button>
+                    </div>
+                    <div class="card" data-description="Best design niches on display">
+                        <img src="../images/composers/beethoven.jpg" alt="infoDdesk0">
+                        <h2>Ludwig van Beethoven (1770–1827) </h2>
+                        <button ng-click="select = 'Van Beethoven'" class="card__btn" type="button">Compositions ►</button>
+                    </div>
+                    <div class="card" data-description="Start simple and evolve">
+                        <img src="../images/composers/sebastian.jpg" alt="infoDdesk1">
+                        <h2>Johann Sebastian Bach (1685–1750)</h2>
+                        <button ng-click="select = 'Sebastian Bach'" class="card__btn" type="button">Compositions ►</button>
+                    </div>                    
+                </div>
+                <!-- <hr> -->
+                <div class="table-responsive-md composer__table">
+                    <caption>Famous Compositions</caption>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Portrait</th>
+                                <th scope="col">Composer</th>
+                                <th scope="col">Title</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="p in pieces">
+                            <tr ng-if="p.composer == select">
+                                <th scope="row"><img class="composer__img" src="{{p.img}}" alt=""></th>
+                                <td>{{p.composer}}</td>
+                                <td>{{p.title}}</td>
+                            </tr>
+                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="p4" ng-controller="SingersController">
+            <h2>List of Singers</h2>
+            <div class="singerwrap">
+                <div class="singerwrap__header">
+                    <h4>Find out your most famous singer by gender</h4>
+                    <div class="singersbtn">
+                        <div class="femalebtn"><button ng-click="gender = 'female'" class="btn btn-success">Female Singers</button></div>
+                        <div class="femalebtn"><button ng-click="gender = 'male'" class="btn btn-success">Male Singers</button></div>
+                    </div>
+                </div>
+                <div class="table-responsive-md singers__table">
+                    <caption>Your famous singers</caption>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Picture</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Likes</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="singer in singers">
+                            <tr ng-if="singer.gender == gender">
+                                <th scope="row"><img class="singer__img" src="{{singer.img}}" alt=""></th>
+                                <td>{{singer.composer}}</td>
+                                <td>{{singer.like}}</td>
+                            </tr>                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="p5" ng-controller="LeadersController">
+           <div class="wrap__leaders">
+                <h2>Leaders who ranked in history</h2>
+                <div class="leaders__wrap__top">
+                    <div class="leaders__top" ng-click="toggleGold()">
+                        <button class="btn btn-large btn-danger" ng-show="showGold">Hide Gold Ranking</button>
+                        <button class="btn btn-large btn-success" ng-hide="showGold">View Gold Ranking</button>
+                    </div>
+                    <div class="leaders__top" ng-click="toggleBronze()">
+                        <button class="btn btn-large btn-danger" ng-show="showBronze">Hide Bronze Ranking</button>
+                        <button class="btn btn-large btn-success" ng-hide="showBronze">View Bronze Ranking</button>
+                    </div>
+                    <div class="leaders__top" ng-click="toggleSilver()">
+                        <button class="btn btn-large btn-danger" ng-show="showSilver">Hide Silver Ranking</button>
+                        <button class="btn btn-large btn-success" ng-hide="showSilver">View Silver Ranking</button>
+                    </div>
+                </div>
+                <div class="leaders__wrap__bottom">
+                    <div class="leaders__bottom gold" ng-show="showGold">
+                        <span ng-repeat="leader in leaders" ng-show="leader.rank==1"><img src="{{leader.img}}" alt=""></span>
+                    </div>
+                    <div class="leaders__bottom silver" ng-show="showSilver">
+                        <span ng-repeat="leader in leaders" ng-show="leader.rank==2"><img src="{{leader.img}}" alt=""></span>
+                    </div>
+                    <div class="leaders__bottom bronze" ng-show="showBronze">
+                        <span ng-repeat="leader in leaders" ng-show="leader.rank==3"><img src="{{leader.img}}" alt=""></span>
+                    </div>
+                </div>
+           </div>
+        </section>
+        <section id="p6" ng-controller="HerosController">
+            <!-- <h2>Select Your Favorite Heros to Your Right</h2> -->
+            <div class="heros__wrap">
+                <div class="hero__left">
+                    <h5>Select Favorites</h5>
+                    <div ng-repeat="hero in leaders">
+                        <div class="hero__img__wrap" ng-click="addFavorite(hero)">
+                            <img src="{{hero.img}}" alt="">
+                            <span>{{hero.name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__right" >
+                    <h5>Store Favorites Here</h5>                    
+                    <div class="table-responsive-md favorite__hero__tbl">
+                        <table class="table">                           
+                            <tbody ng-repeat="favorite in favorites">
+                                <tr>
+                                    <th scope="row">
+                                        <div class="hero__img__wrap">
+                                            <img class="favorite__hero" src="{{favorite.img}}" alt="">
+                                            <span  class="hero__img__wrap__span">{{favorite.name}}</span>
+                                        </div>
+                                    </th>                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                    
+                </div>
+            </div>
+        </section>
+        <section id="p7" ng-controller="LiveSearchController">
+            <div class="filter">
+                <h2>Filter the through Leaders who ranked in history</h2>
+               <div class="filter__input">
+                   <input type="text" ng-model="search" placeholder="Start typing">
+                   <span>{{(leaders | filter:search).length}} of {{leaders.length}} </span>
+                </div>
+                <hr>
+                <span  class="filter__filtered" ng-repeat="hero in leaders | filter:search" >
+                   <img src="{{hero.img}}" alt="">
+                </span>
+               <hr>
+               <div class="filter__guess" ng-if="(leaders | filter:search).length < 4" ng-repeat="leader in leaders | filter:search | limitTo:1">
+                <span>Looking for ⇨</span>
+                <img src="{{leader.img}}" alt="">
+                <span> {{leader.name}} </span>
+               </div>
+            </div>
+        </section>
+    </div>
+    <script src="../js/index.js"></script>
+</body>
+</html>
+<img src="../images/leaders/.png" alt="">
